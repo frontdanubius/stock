@@ -22,8 +22,12 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 300px;
+            width: 400px;
             text-align: center;
+        }
+
+        h1 {
+            color: #0073e6;
         }
 
         label {
@@ -76,13 +80,21 @@
         <input type="number" id="investmentAmount" placeholder="Enter amount">
 
         <label for="leverage">Leverage:</label>
-        <input type="number" id="leverage" placeholder="Enter leverage">
-
-        <label for="action">Select Action:</label>
-        <select id="action">
-            <option value="buy">Buy</option>
-            <option value="sell">Sell</option>
+        <select id="leverage">
+            <option value="1">No Leverage</option>
+            <option value="2">2x Leverage</option>
+            <option value="5">5x Leverage</option>
+            <option value="10">10x Leverage</option>
         </select>
+
+        <label for="spreadTax">Spread Tax (%):</label>
+        <input type="number" id="spreadTax" placeholder="Enter spread tax">
+
+        <label for="overnightTax">Overnight Tax (%):</label>
+        <input type="number" id="overnightTax" placeholder="Enter overnight tax">
+
+        <label for="creditCard">Credit Card:</label>
+        <input type="text" id="creditCard" placeholder="Enter credit card number">
 
         <button onclick="executeTrade()">Execute Trade</button>
     </div>
@@ -93,17 +105,27 @@
             var stock = document.getElementById('stock').value;
             var investmentAmount = document.getElementById('investmentAmount').value;
             var leverage = document.getElementById('leverage').value;
-            var action = document.getElementById('action').value;
+            var spreadTax = document.getElementById('spreadTax').value;
+            var overnightTax = document.getElementById('overnightTax').value;
+            var creditCard = document.getElementById('creditCard').value;
+
+            // Calculate the total investment amount with leverage
+            var totalInvestment = investmentAmount * leverage;
+
+            // Calculate the total tax
+            var totalTax = (spreadTax / 100) * totalInvestment + (overnightTax / 100) * totalInvestment;
 
             // Log the trade details (in a real application, you would send this data to a server)
             console.log('Platform:', platform);
             console.log('Stock:', stock);
-            console.log('Investment Amount:', investmentAmount);
-            console.log('Leverage:', leverage);
-            console.log('Action:', action);
+            console.log('Total Investment Amount with Leverage:', totalInvestment);
+            console.log('Spread Tax:', (spreadTax / 100) * totalInvestment);
+            console.log('Overnight Tax:', (overnightTax / 100) * totalInvestment);
+            console.log('Total Tax:', totalTax);
+            console.log('Credit Card:', creditCard);
 
             // Display a confirmation (in a real application, you would handle the trade execution)
-            alert('Trade executed successfully!');
+            alert('Trade executed successfully! Total Investment: $' + totalInvestment.toFixed(2) + ' with Total Tax: $' + totalTax.toFixed(2));
         }
     </script>
 </body>
